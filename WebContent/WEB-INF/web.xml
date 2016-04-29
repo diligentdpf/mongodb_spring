@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	id="WebApp_ID" version="2.5">
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
 	<display-name>mongodb_spring</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -12,6 +12,14 @@
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!--load-on-startup 这个属性只能写在servlet的最后面，写在前面会报错 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring-servlet.xml</param-value>
+			<!-- spring-servlet文件是servlet name "spring"+"-servlet"组成的，如果没有指定这个文件默认会到 
+				web.xml同目录下找，文件名就是servlet name + "-servlet.xml"，没有这个文件就会报错， 如果指定了 必须写绝对路径，这个文件就是spring-mvc.xml文件 -->
+			<!-- <param-value>classpath:spring-servlet.xml</param-value> -->
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
